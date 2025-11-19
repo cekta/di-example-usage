@@ -13,6 +13,9 @@ class Example
         private $password, // without type hints
         private I $i,
         private AbstractClass $abstract_class,
+        private (AbstractClass & I)| string $dnf_types,
+        private string|int $intersection_type,
+        private AbstractClass & I $union_type,
     ) {
     }
 }

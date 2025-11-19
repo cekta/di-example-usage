@@ -44,7 +44,7 @@ class Project
             alias: [
                 \App\I::class => \App\I\R2::class,
                 \App\AbstractClass::class => \App\AbstractClass\R1::class,
-
+                sprintf('%s&%s', AbstractClass::class, I::class) => \App\Union::class,
             ],
             fqcn: $this->container_fqcn,
         )->compile();
@@ -61,6 +61,8 @@ class Project
             'username' => $this->env['USERNAME'] ?? 'default username',
             // can overwrite by env by : 'USERNAME="new value" php app.php' in runtime
             'password' => $this->env['PASSWORD'] ?? 'default password',
+            sprintf('(%s&%s)|%s', AbstractClass::class, I::class, 'string') => 'default dnf type',
+            'string|int' => 'default intersaction type',
         ];
     }
 }
