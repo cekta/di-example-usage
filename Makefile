@@ -1,11 +1,18 @@
 .PHONY: shell run
 
+build:
+	docker compose build
+	docker compose run -it --rm app make build-docker
+
+build-docker:
+	composer install
+	php ./bin/compile.php
+
 run:
-	docker compose run -it --rm --build app make run-docker
+	docker compose run -it --rm app make run-docker
 
 run-docker:
-	composer install
 	php app.php
 
 shell:
-	docker compose run -it --rm --build app sh
+	docker compose run -it --rm app sh
