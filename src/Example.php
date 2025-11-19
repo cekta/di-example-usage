@@ -6,8 +6,9 @@ namespace App;
 
 class Example
 {
-    public function __construct()
-    {
-        
+    public function __construct(
+        private A $a,
+        private B $b,
+    ) {
     }
 }
