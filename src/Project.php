@@ -49,6 +49,9 @@ class Project
     {
         return [
             // Ваши параметры, можно использовать $this->env
+            'username' => $this->env['USERNAME'] ?? 'default username', 
+            // can overwrite by env by : 'USERNAME="new value" php app.php' in runtime
+            'password' => $this->env['PASSWORD'] ?? 'default password',
         ];
     }
 }

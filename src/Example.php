@@ -9,6 +9,8 @@ class Example
     public function __construct(
         private A $a,
         private B $b,
+        private string $username, // example primitive (like string, int, dobule, array, ...)
+        private $password, // without type hints
     ) {
     }
 }
