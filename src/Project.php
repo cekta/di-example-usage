@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\I\R1;
+use App\I\R2;
 use Cekta\DI\Compiler;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
@@ -29,7 +31,7 @@ class Project
         return new ($this->container_fqcn)($this->params());
     }
 
-    /** 
+    /**
      * @noinspection PhpFullyQualifiedNameUsageInspection
      * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
      */
@@ -63,6 +65,12 @@ class Project
             'password' => $this->env['PASSWORD'] ?? 'default password',
             sprintf('(%s&%s)|%s', AbstractClass::class, I::class, 'string') => 'default dnf type',
             'string|int' => 'default intersaction type',
+            '...variadic_ints' => [1, 2, 5],
+            sprintf('...%s', I::class) => [
+                new R1(),
+                new R2(),
+                new Union(),
+            ]
         ];
     }
 }
