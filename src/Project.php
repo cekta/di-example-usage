@@ -29,6 +29,10 @@ class Project
         return new ($this->container_fqcn)($this->params());
     }
 
+    /** 
+     * @noinspection PhpFullyQualifiedNameUsageInspection
+     * @noinspection PhpUnnecessaryFullyQualifiedNameInspection
+     */
     public function compile(): void
     {
         // Ваша конфигурация для кода генерации
@@ -37,6 +41,11 @@ class Project
                 Example::class,
             ],
             params: $this->params(),
+            alias: [
+                \App\I::class => \App\I\R2::class,
+                \App\AbstractClass::class => \App\AbstractClass\R1::class,
+
+            ],
             fqcn: $this->container_fqcn,
         )->compile();
         if (file_put_contents($this->container_file, $content, LOCK_EX) === false) {
@@ -49,7 +58,7 @@ class Project
     {
         return [
             // Ваши параметры, можно использовать $this->env
-            'username' => $this->env['USERNAME'] ?? 'default username', 
+            'username' => $this->env['USERNAME'] ?? 'default username',
             // can overwrite by env by : 'USERNAME="new value" php app.php' in runtime
             'password' => $this->env['PASSWORD'] ?? 'default password',
         ];
