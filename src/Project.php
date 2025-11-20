@@ -47,6 +47,7 @@ class Project
                 \App\I::class => \App\I\R2::class,
                 \App\AbstractClass::class => \App\AbstractClass\R1::class,
                 sprintf('%s&%s', AbstractClass::class, I::class) => \App\Union::class,
+                '?' . I::class => \App\I\R2::class, // nullable arguments its other type!!! default value not used!!!
             ],
             fqcn: $this->container_fqcn,
         )->compile();
@@ -70,7 +71,8 @@ class Project
                 new R1(),
                 new R2(),
                 new Union(),
-            ]
+            ],
+            'default_value' => 'overwrite default value', // requierd !!!
         ];
     }
 }

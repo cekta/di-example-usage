@@ -17,6 +17,8 @@ class Example
         private (AbstractClass & I)| string $dnf_types,
         private string|int $intersection_type,
         private AbstractClass & I $union_type,
+        private string $default_value = 'default value',
+        private ?I $i_with_default_value = null,
         int ...$variadic_ints
     ) {
         $this->variadic_ints = $variadic_ints;
