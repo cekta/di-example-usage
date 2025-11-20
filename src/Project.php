@@ -7,6 +7,7 @@ namespace App;
 use App\I\R1;
 use App\I\R2;
 use Cekta\DI\Compiler;
+use Cekta\DI\LazyClosure;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 
@@ -42,6 +43,8 @@ class Project
             containers: [
                 Example::class,
                 Example2::class,
+                'db_type',
+                'db_path',
             ],
             params: $this->params(),
             alias: [
@@ -79,6 +82,13 @@ class Project
             A::class . '$username' => 'custom username',
             Example::class . '$intersection_type' => 'overwrite intersection type',
             '...' . Example::class . '$variadic_ints' => [9, 8, 7],
+            'dsn' => new LazyClosure(function (ContainerInterface $container) {
+                // Здесь любой способ создания зависимости, который будет выполняться в runtime, 
+                // без проверки во время генерации
+                return "{$container->get('db_type')}:{$container->get('db_path')}";
+            }),
+            'db_type' => $this->env['DB_TYPE'] ?? 'sqlite',
+            'db_path' => $this->env['DB_PATH'] ?? './db.sqlite'
         ];
     }
 }

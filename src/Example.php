@@ -12,6 +12,7 @@ class Example
         private B $b,
         private string $username, // example primitive (like string, int, dobule, array, ...)
         private $password, // without type hints
+        private $dsn,
         private I $i,
         private AbstractClass $abstract_class,
         private (AbstractClass & I)| string $dnf_types,
