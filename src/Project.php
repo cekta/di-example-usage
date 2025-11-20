@@ -45,6 +45,7 @@ class Project
                 Example2::class,
                 'db_type',
                 'db_path',
+                Example3::class,
             ],
             params: $this->params(),
             alias: [
@@ -53,6 +54,9 @@ class Project
                 sprintf('%s&%s', AbstractClass::class, I::class) => \App\Union::class,
                 '?' . I::class => \App\I\R2::class, // nullable arguments its other type!!! default value not used!!!
                 Example::class . '$i' => \App\I\R1::class,
+                Example3::class => 'example3_param',
+                Example::class . '$std_class' => 'std_alias_custom',
+                \stdClass::class => 'std_alias',
             ],
             fqcn: $this->container_fqcn,
         )->compile();
@@ -64,6 +68,17 @@ class Project
 
     private function params()
     {
+        $std_alias_custom = new \stdClass();
+        $std_alias_custom->name = 'alias custom value';
+        
+        $std_alias = new \stdClass();
+        $std_alias->name = 'alias value';
+        
+        $std_param_custom = new \stdClass();
+        $std_param_custom->name = 'param custom value';
+        
+        $std = new \stdClass();
+        $std->name = 'param value';
         return [
             // Ваши параметры, можно использовать $this->env
             'username' => $this->env['USERNAME'] ?? 'default username',
@@ -77,7 +92,7 @@ class Project
                 new R2(),
                 new Union(),
             ],
-            'default_value' => 'overwrite default value', // requierd !!!
+            'default_value' => 'overwrite default value', // required !!!
             // {Для кого применяется правило}${имя АРГУМЕНТА!!}
             A::class . '$username' => 'custom username',
             Example::class . '$intersection_type' => 'overwrite intersection type',
@@ -88,7 +103,13 @@ class Project
                 return "{$container->get('db_type')}:{$container->get('db_path')}";
             }),
             'db_type' => $this->env['DB_TYPE'] ?? 'sqlite',
-            'db_path' => $this->env['DB_PATH'] ?? './db.sqlite'
+            'db_path' => $this->env['DB_PATH'] ?? './db.sqlite',
+            Example3::class => 'value from params',
+            'example3_param' => 'value from alias',
+            'std_alias_custom' => $std_alias_custom,
+            'std_alias' => $std_alias,
+            \stdClass::class => $std,
+            Example::class . '$std_class' => $std_param_custom,
         ];
     }
 }
