@@ -41,6 +41,7 @@ class Project
         $content = new Compiler(
             containers: [
                 Example::class,
+                Example2::class,
             ],
             params: $this->params(),
             alias: [
