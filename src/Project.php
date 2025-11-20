@@ -49,6 +49,7 @@ class Project
                 \App\AbstractClass::class => \App\AbstractClass\R1::class,
                 sprintf('%s&%s', AbstractClass::class, I::class) => \App\Union::class,
                 '?' . I::class => \App\I\R2::class, // nullable arguments its other type!!! default value not used!!!
+                Example::class . '$i' => \App\I\R1::class,
             ],
             fqcn: $this->container_fqcn,
         )->compile();
@@ -66,7 +67,7 @@ class Project
             // can overwrite by env by : 'USERNAME="new value" php app.php' in runtime
             'password' => $this->env['PASSWORD'] ?? 'default password',
             sprintf('(%s&%s)|%s', AbstractClass::class, I::class, 'string') => 'default dnf type',
-            'string|int' => 'default intersaction type',
+            'string|int' => 'default intersection type',
             '...variadic_ints' => [1, 2, 5],
             sprintf('...%s', I::class) => [
                 new R1(),
@@ -74,6 +75,10 @@ class Project
                 new Union(),
             ],
             'default_value' => 'overwrite default value', // requierd !!!
+            // {Для кого применяется правило}${имя АРГУМЕНТА!!}
+            A::class . '$username' => 'custom username',
+            Example::class . '$intersection_type' => 'overwrite intersection type',
+            '...' . Example::class . '$variadic_ints' => [9, 8, 7],
         ];
     }
 }
