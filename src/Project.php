@@ -49,6 +49,7 @@ class Project
                 Example4::class,
                 Example4Singleton::class,
                 Example4Factory::class,
+                ExampleInfiniteRecursion::class,
             ],
             params: $this->params(),
             alias: [
