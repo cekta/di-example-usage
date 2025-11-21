@@ -46,6 +46,9 @@ class Project
                 'db_type',
                 'db_path',
                 Example3::class,
+                Example4::class,
+                Example4Singleton::class,
+                Example4Factory::class,
             ],
             params: $this->params(),
             alias: [
@@ -59,6 +62,12 @@ class Project
                 \stdClass::class => 'std_alias',
             ],
             fqcn: $this->container_fqcn,
+            singletons: [
+                Example4Singleton::class
+            ],
+            factories: [
+                Example4Factory::class
+            ],
         )->compile();
         if (file_put_contents($this->container_file, $content, LOCK_EX) === false) {
             throw new RuntimeException("$this->container_file cant compile");
@@ -70,13 +79,13 @@ class Project
     {
         $std_alias_custom = new \stdClass();
         $std_alias_custom->name = 'alias custom value';
-        
+
         $std_alias = new \stdClass();
         $std_alias->name = 'alias value';
-        
+
         $std_param_custom = new \stdClass();
         $std_param_custom->name = 'param custom value';
-        
+
         $std = new \stdClass();
         $std->name = 'param value';
         return [
