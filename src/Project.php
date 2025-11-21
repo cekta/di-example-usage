@@ -9,6 +9,7 @@ use App\I\R2;
 use Cekta\DI\Compiler;
 use Cekta\DI\LazyClosure;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 
 class Project
@@ -38,18 +39,14 @@ class Project
      */
     public function compile(): void
     {
+        $discover = new ProjectDiscovery(array_keys(require __DIR__ . '/../vendor/composer/autoload_classmap.php'));
+        $discover->containerImplement(RequestHandlerInterface::class);
         // Ваша конфигурация для кода генерации
         $content = new Compiler(
             containers: [
-                Example::class,
-                Example2::class,
+                ...$discover->getContainers(),
                 'db_type',
                 'db_path',
-                Example3::class,
-                Example4::class,
-                Example4Singleton::class,
-                Example4Factory::class,
-                ExampleInfiniteRecursion::class,
             ],
             params: $this->params(),
             alias: [

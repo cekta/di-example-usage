@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App;
 
-class Example
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+class Example implements RequestHandlerInterface
 {
     private array $variadic_ints;
     public function __construct(
@@ -24,5 +28,10 @@ class Example
         int ...$variadic_ints
     ) {
         $this->variadic_ints = $variadic_ints;
+    }
+
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        // TODO: Implement handle() method.
     }
 }

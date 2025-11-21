@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace App;
 
-class Example4Factory
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+class Example4Factory implements RequestHandlerInterface
 {
+    public function handle(ServerRequestInterface $request): ResponseInterface
+    {
+        // TODO: Implement handle() method.
+    }
 }

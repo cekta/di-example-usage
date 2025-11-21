@@ -2,24 +2,25 @@
 
 declare(strict_types=1);
 
+use App\Example;
+use App\Example2;
+use App\Example4;
+use App\Example4Factory;
+use App\Example4Singleton;
+use App\Project;
+
 require __DIR__ . '/vendor/autoload.php';
 
-$project = new \App\Project($_ENV);
+$project = new Project($_ENV);
 $container = $project->createContainer();
 
-$fn = function (string $name) use ($project) {
-    $container = $project->createContainer();
-    var_dump($container->get($name) === $container->get($name));
-    
-    $container2 = $project->createContainer();
-    var_dump($container->get($name) === $container2->get($name));
-};
+$must_be_available = [
+    Example::class,
+    Example2::class,
+//    App\Example3::class, //overwritten by params
+    Example4::class,
+    Example4Singleton::class,
+    Example4Factory::class,
+];
 
-echo "life cycle: default(scoped)" . PHP_EOL;
-$fn(\App\Example4::class);
-
-echo "life cycle: singleton" . PHP_EOL;
-$fn(\App\Example4Singleton::class);
-
-echo "life cycle: factory" . PHP_EOL;
-$fn(\App\Example4Factory::class);
+var_dump($container->get($must_be_available[rand(0, 4)]));

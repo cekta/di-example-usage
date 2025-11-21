@@ -6,6 +6,10 @@
     }
   },
   "require": {
-    "cekta/di": "^2.2"
+    "cekta/di": "^2.2",
+    "psr/http-server-handler": "^1.0"
+  },
+  "config": {
+    "optimize-autoloader": true
   }
 }
